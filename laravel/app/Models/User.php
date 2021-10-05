@@ -21,13 +21,11 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $fillable = [
         'login',
-        'rating',
         'real_name',
         'email',
         'password',
         'role',
         'author_id',
-        'image_path'
     ];
 
     /**
@@ -46,9 +44,6 @@ class User extends Authenticatable implements JWTSubject
      *
      * @var array
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
 
     public function getJWTIdentifier() {
         return $this->getKey();
@@ -56,17 +51,5 @@ class User extends Authenticatable implements JWTSubject
 
     public function getJWTCustomClaims() {
         return [];
-    }
-
-    public function post() {
-        return $this->hasMany(Post::class);
-    }
-
-    public function comment() {
-        return $this->hasMany(Comment::class);
-    }
-
-    public function likes() {
-        return $this->hasMany(Like::class);
     }
 }
