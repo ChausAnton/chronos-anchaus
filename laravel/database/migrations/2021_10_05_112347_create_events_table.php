@@ -18,7 +18,7 @@ class CreateEventsTable extends Migration
             $table->unsignedBigInteger('event_author_id');
             $table->unsignedBigInteger('event_calendar_id');
             $table->foreign('event_author_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('event_calendar_id')->references('id')->on('calendar')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('event_calendar_id')->references('id')->on('calendars')->onUpdate('cascade')->onDelete('cascade');
             $table->string('event_content')->default('');
             $table->string('event_title')->default('');
             $table->dateTime('event_date');

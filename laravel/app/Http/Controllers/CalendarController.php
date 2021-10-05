@@ -23,9 +23,18 @@ class CalendarController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function CreateCalendar(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'calendar_title'=> 'required|string'
+        ]);
+        if(auth()->user()) {
+            $data = [
+                'calendar_author_id' => auth()->user()->id,
+                'calendar_title' => $validated['calendar_title'],
+            ];
+            return Calendar::create($data);
+        }
     }
 
     /**

@@ -19,7 +19,6 @@ class AuthController extends Controller
             'real_name'=> 'string',
             'email'=> 'required|email|unique:users,email',
             'password'=> 'required|confirmed|min:4',
-            'role' => 'in:admin,user'
         ]);
 
         $validated['password'] = Hash::make($validated['password']);
