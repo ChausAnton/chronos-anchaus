@@ -4,61 +4,90 @@ namespace App\Http\Controllers;
 
 use App\Models\Events;
 use Illuminate\Http\Request;
+use DB;
 
-class EventsController extends Controller
+class EventController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function getEventsForCalendar($id)
     {
-        //
+        $calendar = DB::select("select * from calendars where id = $id;");
+
+        if(!$calendar) 
+            return response("not found", 404);
+
+        if(auth()->user() && auth()->user()->id == $calendar[0]->calendar_author_id) {
+            return DB::select("select * from events where event_calendar_id = $id;");
+        }
+
+        return response("Forbidden", 403);
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function createEventForCalendar(Request $request, $id)
     {
-        //
+
+        $calendar = DB::select("select * from calendars where id = $id;");
+
+        if(!$calendar) 
+            return response("not found", 404);
+
+        $validated = $request->validate([
+            'event_content' => 'required|string',
+            'event_title' => 'required|string',
+            'event_date' => 'required|date|date_format:Y-m-d',
+            'event_category' => 'required|in:arrangement,reminder,task',
+            'event_duration' => 'required|date|date_format:Y-m-d'
+        ]);
+
+        if(auth()->user() && auth()->user()->id == $calendar[0]->calendar_author_id) {
+            $data = [
+                'event_author_id' => auth()->user()->id,
+                'event_calendar_id' => $id,
+                'event_content' => $validated['event_content'],
+                'event_title' => $validated['event_title'],
+                'event_date' => $validated['event_date'],
+                'event_category' => $validated['event_category'],
+                'event_duration' => $validated['event_duration']
+            ];
+            return Events::create($data);
+        }
+        return response("Forbidden", 403);
+
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Events  $events
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Events $events)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Events  $events
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Events $events)
+    public function DeleteEventFromCalendar($id, $eventId)
     {
-        //
+        $calendar = DB::select("select * from calendars where id = $id;");
+
+        if(!$calendar) 
+            return response("not found", 404);
+
+        if(auth()->user() && auth()->user()->id == $calendar[0]->calendar_author_id) {
+            return Events::destroy($eventId);
+        }
+
+        return response("Forbidden", 403);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Events  $events
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Events $events)
+    public function destroy($id)
     {
-        //
+         $calendar = Calendar::find($id);
+
+        if(!$calendar) 
+            return response("not found", 404);
+
+        if(auth()->user() && auth()->user()->id == $calendar->calendar_author_id) {
+            return Calendar::destroy($id);
+        }
+
+        return response("Forbidden", 403);
+        
     }
 }

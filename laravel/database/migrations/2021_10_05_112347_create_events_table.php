@@ -21,6 +21,7 @@ class CreateEventsTable extends Migration
             $table->foreign('event_calendar_id')->references('id')->on('calendars')->onUpdate('cascade')->onDelete('cascade');
             $table->string('event_content')->default('');
             $table->string('event_title')->default('');
+            $table->dateTime('event_duration');
             $table->dateTime('event_date');
             $table->enum('event_category', ['arrangement', 'reminder', 'task'])->default('reminder');
             $table->timestamps();

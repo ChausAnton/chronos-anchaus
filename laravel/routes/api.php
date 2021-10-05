@@ -23,16 +23,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('user', 'App\Http\Controllers\UserController');
-Route::resource('posts', 'App\Http\Controllers\PostsController');
-Route::resource('category', 'App\Http\Controllers\CategoryController');
-Route::resource('comment', 'App\Http\Controllers\CommentController');
-Route::resource('like', 'App\Http\Controllers\LikeController');
 ///////////
 Route::post('/CreateCalendar', 'App\Http\Controllers\CalendarController@CreateCalendar');
 Route::get('/getCalendarsForUser', 'App\Http\Controllers\CalendarController@getCalendarsForUser');
 Route::get('/getCalendar/{id}', 'App\Http\Controllers\CalendarController@getCalendar');
 Route::delete('/DeleteCalendar/{id}', 'App\Http\Controllers\CalendarController@DeleteCalendar');
+
+
+////////
+Route::get('/getEventsForCalendar/{id}', 'App\Http\Controllers\EventController@getEventsForCalendar');
+Route::post('/createEventForCalendar/{id}', 'App\Http\Controllers\EventController@createEventForCalendar');
+Route::delete('/DeleteEventFromCalendar/{id}/{eventId}', 'App\Http\Controllers\EventController@DeleteEventFromCalendar');
 
 
 Route::post('/login', 'App\Http\Controllers\AuthController@Login');

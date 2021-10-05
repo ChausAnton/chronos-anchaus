@@ -19,6 +19,7 @@ class Events extends Model
         'event_title',
         'event_date',
         'event_category',
+        'event_duration'
     ];
 
 

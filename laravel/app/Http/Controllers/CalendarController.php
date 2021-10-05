@@ -16,6 +16,9 @@ class CalendarController extends Controller
      */
     public function getCalendarsForUser()
     {
+        if(!auth()->user())
+            return response("Forbidden", 403);
+
         $user_id = auth()->user()->id;
         return DB::select("select * from calendars where calendar_author_id = $user_id;");
 
@@ -39,6 +42,8 @@ class CalendarController extends Controller
             ];
             return Calendar::create($data);
         }
+        return response("Forbidden", 403);
+
     }
 
     /**
@@ -54,7 +59,7 @@ class CalendarController extends Controller
         if(!$calendar) 
             return response("not found", 404);
 
-        if(auth()->user()->id == $calendar->calendar_author_id) {
+        if(auth()->user() && auth()->user()->id == $calendar->calendar_author_id) {
             return $calendar;
         }
         
@@ -88,7 +93,7 @@ class CalendarController extends Controller
         if(!$calendar) 
             return response("not found", 404);
 
-        if(auth()->user()->id == $calendar->calendar_author_id) {
+        if(auth()->user() && auth()->user()->id == $calendar->calendar_author_id) {
             return Calendar::destroy($id);
         }
 
