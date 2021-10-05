@@ -31,6 +31,7 @@ Route::delete('/DeleteCalendar/{id}', 'App\Http\Controllers\CalendarController@D
 
 
 ////////
+Route::get('/getEventForCalendar/{id}/{eventId}', 'App\Http\Controllers\EventController@getEventForCalendar');
 Route::get('/getEventsForCalendar/{id}', 'App\Http\Controllers\EventController@getEventsForCalendar');
 Route::post('/createEventForCalendar/{id}', 'App\Http\Controllers\EventController@createEventForCalendar');
 Route::delete('/DeleteEventFromCalendar/{id}/{eventId}', 'App\Http\Controllers\EventController@DeleteEventFromCalendar');

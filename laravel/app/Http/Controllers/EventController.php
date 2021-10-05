@@ -57,9 +57,18 @@ class EventController extends Controller
     }
 
 
-    public function show(Events $events)
+    public function getEventForCalendar($id, $eventId)
     {
-        //
+        $calendar = DB::select("select * from calendars where id = $id;");
+
+        if(!$calendar) 
+            return response("not found", 404);
+
+        if(auth()->user() && auth()->user()->id == $calendar[0]->calendar_author_id) {
+            return DB::select("select * from events where id = $eventId;");
+        }
+
+        return response("Forbidden", 403);
     }
 
     public function DeleteEventFromCalendar($id, $eventId)
@@ -74,20 +83,5 @@ class EventController extends Controller
         }
 
         return response("Forbidden", 403);
-    }
-
-    public function destroy($id)
-    {
-         $calendar = Calendar::find($id);
-
-        if(!$calendar) 
-            return response("not found", 404);
-
-        if(auth()->user() && auth()->user()->id == $calendar->calendar_author_id) {
-            return Calendar::destroy($id);
-        }
-
-        return response("Forbidden", 403);
-        
     }
 }
