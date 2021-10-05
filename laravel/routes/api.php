@@ -30,6 +30,10 @@ Route::resource('comment', 'App\Http\Controllers\CommentController');
 Route::resource('like', 'App\Http\Controllers\LikeController');
 ///////////
 Route::post('/CreateCalendar', 'App\Http\Controllers\CalendarController@CreateCalendar');
+Route::get('/getCalendarsForUser', 'App\Http\Controllers\CalendarController@getCalendarsForUser');
+Route::get('/getCalendar/{id}', 'App\Http\Controllers\CalendarController@getCalendar');
+Route::delete('/DeleteCalendar/{id}', 'App\Http\Controllers\CalendarController@DeleteCalendar');
+
 
 Route::post('/login', 'App\Http\Controllers\AuthController@Login');
 Route::post('/register', 'App\Http\Controllers\AuthController@register');

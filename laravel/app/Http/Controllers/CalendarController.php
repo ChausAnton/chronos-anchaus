@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Calendar;
 use Illuminate\Http\Request;
+use DB;
+
 
 class CalendarController extends Controller
 {
@@ -12,9 +14,11 @@ class CalendarController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function getCalendarsForUser()
     {
-        //
+        $user_id = auth()->user()->id;
+        return DB::select("select * from calendars where calendar_author_id = $user_id;");
+
     }
 
     /**
@@ -43,9 +47,19 @@ class CalendarController extends Controller
      * @param  \App\Models\Calendar  $calendar
      * @return \Illuminate\Http\Response
      */
-    public function show(Calendar $calendar)
+    public function getCalendar($id)
     {
-        //
+        $calendar = Calendar::find($id);
+
+        if(!$calendar) 
+            return response("not found", 404);
+
+        if(auth()->user()->id == $calendar->calendar_author_id) {
+            return $calendar;
+        }
+        
+        return response("Forbidden", 403);
+
     }
 
     /**
@@ -66,8 +80,19 @@ class CalendarController extends Controller
      * @param  \App\Models\Calendar  $calendar
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Calendar $calendar)
+    public function DeleteCalendar(Calendar $calendar, $id)
     {
-        //
+
+        $calendar = Calendar::find($id);
+
+        if(!$calendar) 
+            return response("not found", 404);
+
+        if(auth()->user()->id == $calendar->calendar_author_id) {
+            return Calendar::destroy($id);
+        }
+
+        return response("Forbidden", 403);
+        
     }
 }
