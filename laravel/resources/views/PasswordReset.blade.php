@@ -1,5 +1,12 @@
-Hello <i>{{ $data->receiver }}</i>,
-<p>You have requested the password reset.
-<br>Please, input this data on website <p>{{ $data->token }}</p> to continue.
-<br>The link expires once you click on it.</p> 
-<b>© USOF</b>
+<html>
+    <head>
+        <style>
+        </style>
+    </head>
+    <body>
+        <p>Hi {{$data->receiver}},</p>
+        <p>You requested to reset your password.</p>
+        <p> Please, click the link below to reset your password</p>
+        <a href={{ $data->url }}>Reset password</a>
+    </body>
+</html>

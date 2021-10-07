@@ -9,7 +9,7 @@ export const ResetPassword = () => {
     const {loading, error, request, clearError} = useHttp()
 
     const [form, setForm] = useState ( {
-        password: '', passwordConfirmation: ''
+        password: '', password_confirmation: ''
     });
 
     const message = useMessage();
@@ -32,7 +32,7 @@ export const ResetPassword = () => {
     const passwordResetHandler = async(event) => {
         try {
             event.preventDefault();
-            await request('/auth/resetPassword/' + token + "/" + id, 'POST', {...form})
+            await request('/api/reset/' + token + "/" + id, 'POST', {...form})
             history.push('/')
         }
         catch (e) {}
@@ -57,14 +57,14 @@ export const ResetPassword = () => {
                             </div>
                             <div className="input-field">
                                 <input placeholder="repeat password" 
-                                    id="passwordConfirmation" 
+                                    id="password_confirmation" 
                                     type="password" 
-                                    name="passwordConfirmation" 
+                                    name="password_confirmation" 
                                     className="yellow-input white-text" 
                                     onChange={chengeHandler} 
                                     />
 
-                                <label htmlFor="passwordConfirmation">repeat password</label>
+                                <label htmlFor="password_confirmation">repeat password</label>
                             </div>
                         </div>
                 </div>

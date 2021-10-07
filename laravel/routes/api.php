@@ -40,8 +40,8 @@ Route::delete('/DeleteEventFromCalendar/{id}/{eventId}', 'App\Http\Controllers\E
 Route::post('/login', 'App\Http\Controllers\AuthController@Login');
 Route::post('/register', 'App\Http\Controllers\AuthController@register');
 Route::post('/logout', 'App\Http\Controllers\AuthController@Logout');
-Route::post('/password-reset', 'App\Http\Controllers\AuthController@requestForPasswordReset');
-Route::post('/reset', 'App\Http\Controllers\AuthController@PasswordReset');
+Route::post('/requestForPasswordReset', 'App\Http\Controllers\AuthController@requestForPasswordReset');
+Route::post('/reset/{token}/{userId}', 'App\Http\Controllers\AuthController@PasswordReset');
 
 
 

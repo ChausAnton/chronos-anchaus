@@ -55,10 +55,13 @@ class AuthController extends Controller
             'email'=> 'required|email'
         ]);
 
-        $user = User::find(DB::table('users')->where('email', '=', $validated['email'])->first()->id);
+        $user = null;
+        $temp_user = DB::table('users')->where('email', '=', $validated['email'])->first();
+        if($temp_user)   
+            $user = User::find($temp_user->id);
 
         if (!$user) {
-            return redirect()->back()->withErrors(['email' => trans('User does not exist')]);
+            return response("Not Found", 404);
         }
 
         $token = Str::random(60);
@@ -68,32 +71,32 @@ class AuthController extends Controller
         $mailObj = new \stdClass();
         $mailObj->token =  $token;
         $mailObj->receiver = $user->real_name;
+        $mailObj->id = $user->id;
+        $mailObj->url = 'http://localhost:3000/resetPassword/' . $token . '/' . $user->id;
         Mail::to($validated['email'])->send(new reset_password($mailObj));
 
-        return "check your mail";
+        return response(['message' => "check your mail"], 200);
 
     }
 
-    public function PasswordReset(Request $request) {
+    public function PasswordReset(Request $request, $token, $userId) {
         $validated =  $request->validate([
-            'email'=> 'required|email',
-            'token'=> 'required|min:20',
             'password'=> 'required|confirmed|min:4',
         ]);
 
-        $user = User::find(DB::table('users')->where('email', '=', $validated['email'])->first()->id);
+        $user = User::find($userId);
 
         if (!$user) {
-            return redirect()->back()->withErrors(['email' => trans('User does not exist')]);
+            return response("Not Found", 404);
         }
 
-        if(strcmp($validated['token'], $user->password_reset_token) == 0) {
+        if(strcmp($token, $user->password_reset_token) == 0) {
             $user->password = Hash::make($validated['password']);
             $user->password_reset_token = "";
             $user->save();
-            return "your password has been changed";
+            return response(['message' => "password was changed"], 200);
         }
-        return "your token not match";
+        return response(['message' => "token not match"], 403);
 
     }
 

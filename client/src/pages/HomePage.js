@@ -14,15 +14,9 @@ export const HomePage = () => {
 
     const fetchPosts = useCallback(async() => {
         try {
-            let UrlParams = '/1';
-            if(page)
-                UrlParams = '/' + page;
-            if(category)
-                UrlParams += '/' + category;
-            if(SearchField) 
-                UrlParams += '/' + SearchField;
-            const fetched = await request('/post/getPostPerPage' + UrlParams, 'GET', null, {
-                'x-access-token': token
+            
+            const fetched = await request('/post/getPostPerPage', 'GET', null, {
+                'Bearer': token
             })
             setPosts(fetched)
         }

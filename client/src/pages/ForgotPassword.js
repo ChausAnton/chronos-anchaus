@@ -36,7 +36,7 @@ export const ForgotPassword = () => {
     const passwordResetHandler = async(event) => {
         try {
             event.preventDefault();
-            await request('/auth/requestForPasswordReset', 'POST', {...form})
+            await request('/api/requestForPasswordReset', 'POST', {...form})
         }
         catch (e) {}
     };
