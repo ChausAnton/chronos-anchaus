@@ -7,11 +7,11 @@ import Select from 'react-select';
 
 export const RegisterPage = () => {
     const message = useMessage();
-    const {role, token} = useContext(AuthContext);
+    const {token} = useContext(AuthContext);
     const {loading, error, request, clearError} = useHttp()
 
     const [form, setForm] = useState ( {
-        email: '', login: '', real_name: '', password: '', passwordConfirmation: '', role: 'user',
+        email: '', login: '', real_name: '', password: '', password_confirmation: ''
     });
 
     useEffect( () => {
@@ -26,14 +26,11 @@ export const RegisterPage = () => {
     const chengeHandler = event => {
         if(event.target)
             setForm({...form, [event.target.name]: event.target.value})
-        else {
-            form.role = event.value
-        }
     };
 
     const registerHandler = async() => {
         try {
-            await request('/auth/signUp', 'POST', {...form}, {'x-access-token': token})
+            await request('/api/register', 'POST', {...form})
         }
         catch (e) {}
     };
@@ -119,30 +116,15 @@ export const RegisterPage = () => {
                             </div>
                             <div className="input-field">
                                 <input placeholder="repeat password" 
-                                    id="passwordConfirmation" 
+                                    id="password_confirmation" 
                                     type="password" 
-                                    name="passwordConfirmation" 
+                                    name="password_confirmation" 
                                     className="yellow-input white-text" 
                                     onChange={chengeHandler} 
                                     />
 
-                                <label htmlFor="passwordConfirmation">repeat password</label>
+                                <label htmlFor="password_confirmation">repeat password</label>
                             </div>
-                            {(role && role.localeCompare('admin') === 0) ? 
-                                <div className="input-field col s12 SelectForCreateUser">
-                                <Select 
-                                    defaultValue={{ label: "user", value: "user" }}
-                                    placeholder="Select user's role"
-                                    options={options}
-                                    closeMenuOnSelect={true}
-                                    id="role" 
-                                    name="role" 
-                                    styles={SelectStyle}
-                                    onChange={chengeHandler}
-                                    />
-                                    <label htmlFor="role" hidden>role</label>
-                                </div> : <></>
-                            }
                         </div>
                 </div>
                 <div className="card-action">

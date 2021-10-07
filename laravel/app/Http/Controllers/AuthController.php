@@ -23,14 +23,6 @@ class AuthController extends Controller
 
         $validated['password'] = Hash::make($validated['password']);
 
-        $role = $request->role;
-        if(strcmp($role, 'admin') == 0) {
-            $user = auth()->user();
-            if(!isAdmin(auth()->user())) {
-                return "only admin can create admin";
-            }
-        } 
-
         $user = User::create($validated);
 
         return response([

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production npm run server",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon src/index.js",
+    "server": "php laravel/artisan serve",
     "server:install": "npm install",
     "client": "npm run start --prefix client",
     "client:install": "npm install --prefix client",

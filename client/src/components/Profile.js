@@ -7,7 +7,7 @@ import { FiEdit2} from "react-icons/fi";
 
 export const Profile = ({user, posts}) => {
     const [editProfile, setEditProfile] = useState(false);
-    const {userId, role} = useContext(AuthContext);
+    const {userId} = useContext(AuthContext);
     const {id} = useParams();
 
     if(!user) {
@@ -30,7 +30,7 @@ export const Profile = ({user, posts}) => {
 
     return (
     <>
-    {   (editProfile && ((!id || (userId === id)) || (role && role.localeCompare('admin') === 0))) ? 
+    {   (editProfile && ((!id || (userId === id)))) ? 
         (<div>
             <EditProfile setEditProfileOnFalse={setEditProfileOnFalse} user={user}/>
         </div>) 
@@ -42,7 +42,7 @@ export const Profile = ({user, posts}) => {
                         <span className="ProfileUserName">{user.real_name}</span>
                         <img src={PrifileImage} alt="Avatar" width="200" height="200" className="profileImage"/>
                     </div>
-                    {((!id || (userId === parseInt(id))) || (role && role.localeCompare('admin') === 0)) ?
+                    {((!id || (userId === parseInt(id)))) ?
                         <button className="btn-floating btn-large waves-effect waves-light red EditButton" onClick={setEditProfileOnTrue}> 
                                 <FiEdit2 className="FiEdit2Size"/>
                         </button> : <></>

@@ -9,14 +9,14 @@ import { FiArrowLeft, FiSend, FiPlus } from "react-icons/fi";
 
 
 export const EditProfile = ({setEditProfileOnFalse, user}) => {
-    const {userId, token, role} = useContext(AuthContext);
+    const {userId, token} = useContext(AuthContext);
     const [file, setFile] = useState();
     const {id} = useParams();
     const {error, request, clearError} = useHttp()
     const message = useMessage();
 
     const [form, setForm] = useState({
-        real_name: '', role: user.role
+        real_name: ''
     });
 
     useEffect( () => {
@@ -40,9 +40,6 @@ export const EditProfile = ({setEditProfileOnFalse, user}) => {
         if(event.target) {
             event.preventDefault();
             setForm({...form, [event.target.name]: event.target.value})
-        }
-        else {
-            form.role = event.value
         }
     };
 
@@ -114,35 +111,7 @@ export const EditProfile = ({setEditProfileOnFalse, user}) => {
                     </div>
                     
                     <div className="card-content CardContent blue darken-2">
-                        { ((id && (userId !== id)) && (role && role.localeCompare('admin') === 0)) ?
-                        <div className="input-field col s12 SelectForEditUser">
-                            <Select 
-                                defaultValue={{ label: user.role, value: user.role }}
-                                placeholder="Select user's role"
-                                options={options}
-                                closeMenuOnSelect={true}
-                                id="role" 
-                                name="role" 
-                                styles={SelectStyle}
-                                onChange={chengeHandler}
-                            />
-                            <label htmlFor="role" hidden>role</label>
-                        </div>
-                        :
-                            <>
-                            <div className="input-field">
-                                <input placeholder="input real name" 
-                                    id="real_name" 
-                                    type="text" 
-                                    name="real_name" 
-                                    className="yellow-input white-text" 
-                                    onChange={chengeHandler} 
-                                    />
-                                <label htmlFor="real_name">real name</label>
-                            </div>
-                            <input type="file" onChange={fileSelectedHandler} name="Avatar" hidden id="selectFileInput"/>
-                            </>
-                        }
+                       
                         <button 
                             className="btn red" 
                             onClick={profileUpdateHandler} 

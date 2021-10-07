@@ -9,7 +9,7 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 export const Navbar = () => {
     const [user, setUser] = useState();
     const {loading, request} = useHttp();
-    const {userId, role} = useContext(AuthContext);
+    const {userId} = useContext(AuthContext);
     const history = useHistory();
     const [SearchActive, setSearchActive] = useState(false);
 
@@ -123,14 +123,11 @@ export const Navbar = () => {
                         <NavLink to="/profile" className="chip ChipCustom">
                             <img src={userAvater} alt="avatar" width="50" height="50"/>
                             <div className="UserInfoNavbar">{user.login}</div>
-                            {user.role.localeCompare("admin") === 0 ?
-                                <MdStars className="UserInfoNavbarIcon" />:
-                                <></>
-                            }
+                            
                         </NavLink>
                         <ul id="nav-mobile" className="right">
                             <li><i onClick={setSearchActiveOnTrue}><FiSearch /></i></li>
-                            {(role && role.localeCompare('admin') === 0) ? <li><NavLink to="/register">Create new user</NavLink></li> : <></>}
+                            <li><NavLink to="/register">Create new user</NavLink></li>
                             <li><a className="dropdown-trigger" href="/" data-target="dropdown1" id="dropdown-trigger">Categories<MdKeyboardArrowDown  className="FiArrowDownNavBarDropDown"/></a></li>
                             <li><NavLink to="/create">Create Post</NavLink></li>
                             <li><a className="blue darken-3" href="/home" onClick={logoutHandler}>Logout</a></li>

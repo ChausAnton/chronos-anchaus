@@ -6,7 +6,7 @@ import { FiArrowRight, FiArrowLeft} from "react-icons/fi";
 
 export const PostsList = ({posts, category, SearchField}) => {
     const history = useHistory();
-    const {role, token} = useContext(AuthContext);
+    const {token} = useContext(AuthContext);
     const {request} = useHttp();
     if(!posts) {
         return <p className="center">Posts not found</p>
@@ -74,22 +74,6 @@ export const PostsList = ({posts, category, SearchField}) => {
                                         </div>
                                     </div>
                                 </div>
-                                    {(role && role.localeCompare('admin') === 0) ? 
-                                        <><div className="chip">
-                                            Status: {post.status}
-                                        </div>
-                                        {(post.status && post.status.localeCompare('active') === 0) ? 
-                                            <div className={"chip " + post.status} onClick={postToActiveInactive} id={post.id}>
-                                                to inactive
-                                            </div>
-                                            :
-                                            <div className={"chip " + post.status} onClick={postToActiveInactive} id={post.id}>
-                                                to active
-                                            </div>
-                                        }</>
-                                         : <></>
-                                    }
-                                    
                             </div>
                         </div>
                     </Link>

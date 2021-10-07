@@ -8,7 +8,7 @@ import { FiArrowDown, FiArrowUp } from "react-icons/fi";
 export const Comments = ({comments}) => {
     const {error, clearError, request} = useHttp();
     const history = useHistory();
-    const {token, role} = useContext(AuthContext);
+    const {token} = useContext(AuthContext);
     const message = useMessage();
     const {id} = useParams();
 
@@ -108,21 +108,7 @@ export const Comments = ({comments}) => {
                                 </div>
                                     <div className="CommentStatusBox">
                                         <div className="InnerCommentStatusBox">
-                                            {(role && role.localeCompare('admin') === 0) ? 
-                                                    <><div className="chip">
-                                                        Status: {comment.status_comment}
-                                                    </div>
-                                                    {(comment.status_comment && comment.status_comment.localeCompare('active') === 0) ? 
-                                                        <div className={"chip " + comment.status_comment} onClick={commentToActiveInactive} id={comment.id}>
-                                                            to inactive
-                                                        </div>
-                                                        :
-                                                        <div className={"chip " + comment.status_comment} onClick={commentToActiveInactive} id={comment.id}>
-                                                            to active
-                                                        </div>
-                                                    }</>
-                                                    : <></>
-                                                }
+                                            
                                             </div>
                                     </div>
                             </div>
