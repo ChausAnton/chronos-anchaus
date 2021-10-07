@@ -3,7 +3,6 @@ import { useHttp } from '../hooks/http.hook';
 import { useMessage } from '../hooks/message.hook';
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import Select from 'react-select';
 
 export const RegisterPage = () => {
     const message = useMessage();
@@ -35,34 +34,12 @@ export const RegisterPage = () => {
         catch (e) {}
     };
 
-    const options = [{value: "user", label: "user"},
-                    {value: "admin", label: "admin"}];
-
     const history = useHistory();
     const signInHandler = event => {
         event.preventDefault();
         history.push('/')
     };
 
-    const SelectStyle = {
-        option: (provided) => ({
-            ...provided,
-            color: '#000000',
-            padding: 10,
-        }),
-        valueContainer: base => ({
-            ...base,
-            color: 'white',
-        }),
-        control: (base, state) => ({
-            ...base,
-            boxShadow: "none",
-            border: `2px solid ${state.isFocused ? "#ffeb3b" : "#1976d2"}`,
-            '&:hover': {
-                border: `2px solid ${state.isFocused ? "#ffeb3b" : "#1976d2"}`
-            }
-        })
-    }
 
     return (
         <div>
