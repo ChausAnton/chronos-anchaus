@@ -9,7 +9,7 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 export const Navbar = () => {
     const [user, setUser] = useState();
     const {loading, request} = useHttp();
-    const {userId} = useContext(AuthContext);
+    const {userId, token} = useContext(AuthContext);
     const history = useHistory();
     const [SearchActive, setSearchActive] = useState(false);
 
@@ -31,8 +31,8 @@ export const Navbar = () => {
 
     const fetcheCategories = useCallback(async() => {
         try {
-            const fetched = await request('/category/getCategories', 'GET', null)
-            sessionStorage.setItem('categories', JSON.stringify(fetched))
+            // const fetched = await request('/category/getCategories', 'GET', null)
+            // sessionStorage.setItem('categories', JSON.stringify(fetched))
         }
         catch (e) {}
     }, [request]);
@@ -44,8 +44,8 @@ export const Navbar = () => {
 
 
     const fetcehUser = useCallback(async() => {
-        const fetched = await request('/user/getUser/' + userId, 'GET', null)
-        setUser(fetched)
+        // const fetched = await request('/user/getUser/' + userId, 'GET', null)
+        // setUser(fetched)
     }, [userId, request]);
 
     useEffect( () => {
@@ -58,6 +58,7 @@ export const Navbar = () => {
 
     const logoutHandler = event => {
         event.preventDefault();
+        request('/api/logout', 'POST', {'Bearer': token})
         auth.logout();
         history.push('/')
     };

@@ -109,7 +109,7 @@ class AuthController extends Controller
                 $user->token = '';
                 $user->save();
             }
-            return $user;
+            return response(['message' => "logout"], 200);
         } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
             return response(['error' => $e->getMessage()], 401);
         }
