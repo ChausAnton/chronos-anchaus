@@ -14,10 +14,12 @@ export const HomePage = () => {
     useEffect(()=>{
         const date = new Date();
         const nextDays = new Date(date)
-        nextDays.setDate(date.getDate());
+        nextDays.setDate(1);
         let curMonth = date.getMonth()
         const tempMonth = [];
         let count = -(date.getDate() -  1);
+
+        tempMonth.push(date.toLocaleString('default', { month: 'long' }))
 
         const baseDate = new Date(Date.UTC(2017, 0, 2)); // just a Monday
         for(let i = 0; i < 7; i++)
@@ -47,7 +49,7 @@ export const HomePage = () => {
 
     const fetchCalendars = useCallback(async() => {
         try {
-            const fetched = await request('api/getCalendarsForUser', 'GET', null, {
+            const fetched = await request('api/getCalendarsWithEvents', 'GET', null, {
                 'Authorization': token
             })
             setCalendars(fetched)
@@ -68,7 +70,7 @@ export const HomePage = () => {
         <div className="BlockForCalendars">{
             calendars.map((calendar) => {
                 return (
-                    <div className="CalendarBlock" key={calendar.id}><Calendar calendar={calendar} month={month}/></div>
+                    <div className="CalendarBlock" key={calendar.calendar.id}><Calendar calendar={calendar} month={month}/></div>
                     
                 );
             })

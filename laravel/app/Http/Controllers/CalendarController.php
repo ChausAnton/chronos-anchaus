@@ -24,6 +24,29 @@ class CalendarController extends Controller
 
     }
 
+    public function getCalendarsWithEvents()
+    {
+        if(!auth()->user())
+            return response("Forbidden", 403);
+
+        $user_id = auth()->user()->id;
+        $calendars = DB::select("select * from calendars where calendar_author_id = $user_id;");
+        $data = [];
+        foreach($calendars as $calendar) {
+            $temp = [
+                'calendar' => $calendar,
+                'events' => []
+            ];
+
+            $event_calendar_id = $calendar->id;
+            $Events = DB::select("select * from events where event_calendar_id = $event_calendar_id;");
+            foreach($Events as $event) { 
+                array_push($temp['events'], $event);
+            }
+            array_push($data, $temp);
+        }
+        return  $data;
+    }
     /**
      * Store a newly created resource in storage.
      *

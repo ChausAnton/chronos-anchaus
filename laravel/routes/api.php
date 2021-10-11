@@ -27,6 +27,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/CreateCalendar', 'App\Http\Controllers\CalendarController@CreateCalendar');
 Route::get('/getCalendarsForUser', 'App\Http\Controllers\CalendarController@getCalendarsForUser');
 Route::get('/getCalendar/{id}', 'App\Http\Controllers\CalendarController@getCalendar');
+Route::get('/getCalendarsWithEvents', 'App\Http\Controllers\CalendarController@getCalendarsWithEvents');
 Route::delete('/DeleteCalendar/{id}', 'App\Http\Controllers\CalendarController@DeleteCalendar');
 
 
@@ -36,7 +37,7 @@ Route::get('/getEventsForCalendar/{id}', 'App\Http\Controllers\EventController@g
 Route::post('/createEventForCalendar/{id}', 'App\Http\Controllers\EventController@createEventForCalendar');
 Route::delete('/DeleteEventFromCalendar/{id}/{eventId}', 'App\Http\Controllers\EventController@DeleteEventFromCalendar');
 
-
+//getCalendarsWithEvents
 Route::post('/login', 'App\Http\Controllers\AuthController@Login');
 Route::post('/register', 'App\Http\Controllers\AuthController@register');
 Route::get('/logout', 'App\Http\Controllers\AuthController@Logout');
