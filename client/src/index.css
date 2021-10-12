@@ -51,4 +51,25 @@ input.yellow-input:focus {
     border-bottom: 2px solid black;
 }
 
+.FiPlusSizeEditProfile, .FiArrowLeftSizeEditProfile {
+    position: relative;
+    font-size: x-large;
+    top: 5px;
+}
 
+.FiSendSizeEditProfile {
+    position: relative;
+    font-size: large;
+    top: 5px;
+    right: -5px;
+}
+
+.ButtonBack {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
+
+.CreateCalendarInput {
+    margin-top: 60px;
+}

@@ -3,13 +3,26 @@ import { useHttp } from '../hooks/http.hook';
 import {AuthContext} from '../context/AuthContext'
 import { Loader } from '../components/Loader';
 import { Calendar } from '../components/Calendar';
-
+import { FiPlus } from "react-icons/fi"
+import { CreateCalendar } from '../components/CreateCalendar';
 
 export const HomePage = () => {
     const [calendars, setCalendars] = useState();
     const {loading, request} = useHttp();
     const {token} = useContext(AuthContext);
     const [month, setMonth] = useState();
+    const [createNewCalendarStatus, setCreateNewCalendarStatus] = useState(false);
+
+    const setCreateNewCalendarStatusOnTrue = (event) => {
+        event.preventDefault();
+        setCreateNewCalendarStatus(true)
+    }
+
+    const setCreateNewCalendarStatusOnFalse = (event) => {
+        event.preventDefault();
+        setCreateNewCalendarStatus(false)
+    }
+
 
     useEffect(()=>{
         const date = new Date();
@@ -62,19 +75,41 @@ export const HomePage = () => {
         fetchCalendars();
     }, [fetchCalendars]);
 
+
     if(loading  || !calendars) {
-        return <Loader />
+        return (
+            <>
+                <Loader />
+                <button className="btn-floating btn-large cyan pulse"><FiPlus className="FiPlusSizeEditProfile"/></button>
+
+            </>
+        )
+        
     }
+    console.log(calendars.length )
 
     return (
-        <div className="BlockForCalendars">{
-            calendars.map((calendar) => {
-                return (
-                    <div className="CalendarBlock" key={calendar.calendar.id}><Calendar calendar={calendar} month={month}/></div>
-                    
-                );
-            })
-        }</div>
+        <>
+        {
+            (createNewCalendarStatus === true) ? 
+            
+            (<div>
+                <CreateCalendar setCreateNewCalendarStatusOnFalse={setCreateNewCalendarStatusOnFalse}/>
+            </div>)
+        :
+            (<div className="BlockForCalendars">{
+                calendars.map((calendar) => {
+                    return (
+                        <div className="CalendarBlock" key={calendar.calendar.id}>
+                            <Calendar calendar={calendar} month={month}/>
+                        </div>
+                    );
+                })
+            }
+            <button className={('btn-floating btn-large cyan ' + (calendars.length === 0 ? 'pulse' : ''))} onClick={setCreateNewCalendarStatusOnTrue}><FiPlus className="FiPlusSizeEditProfile"/></button>
+            </div>)
+        }
+        </>
     );
 
 }

@@ -3,7 +3,6 @@ import React from "react";
 
 export const Calendar = ({calendar, month}) => {
     let eventsDates = [];
-    console.log(calendar)
     if(calendar.events.length !== 0) {
         eventsDates = calendar.events.map((event) => {
             return parseInt(event.event_date.split(' ')[0].split('-').slice(-1)[0])
