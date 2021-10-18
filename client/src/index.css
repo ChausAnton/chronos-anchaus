@@ -39,11 +39,14 @@ input.yellow-input:focus {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     grid-gap: 2px; 
-    
+    grid-column-start: 2;
+    grid-column-end: 7;
+    align-items: center;
+    justify-items: center;
 }
 
 .MonthBlock {
-    grid-column-start: 4;
+    grid-column-start: 1;
     grid-column-end: 8;
 }
 
@@ -72,4 +75,21 @@ input.yellow-input:focus {
 
 .CreateCalendarInput {
     margin-top: 60px;
+}
+
+.CalendarPageGrid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-gap: 2px; 
+}
+
+.PrevMonth, .NextMonth {
+    align-self: center;
+    justify-self: center;
+}
+
+
+.MonthNextOrPrevArrow {
+    font-size: 50px;
+    color: black;
 }

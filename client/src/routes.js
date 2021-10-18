@@ -5,6 +5,7 @@ import {RegisterPage} from './pages/RegisterPage'
 import { ForgotPassword } from './pages/ForgotPassword';
 import { ResetPassword } from './pages/ResetPassword';
 import { HomePage } from './pages/HomePage';
+import { CalendarPage } from './pages/CalendarPage';
 
 export const useRoutes = isAuth => {
     if(isAuth) {
@@ -12,6 +13,9 @@ export const useRoutes = isAuth => {
             <Switch>
                 <Route path="/home/:page?/:category?/:SearchField?" exact>
                     <HomePage />
+                </Route>
+                <Route path="/calendarpage/:id" exact>
+                    <CalendarPage />
                 </Route>
                 <Redirect to="/home" />
             </Switch>

@@ -1,17 +1,25 @@
 import React from "react";
+import { useHistory } from 'react-router-dom';
 
 
 export const Calendar = ({calendar, month}) => {
+    const history = useHistory();
+    
     let eventsDates = [];
     if(calendar.events.length !== 0) {
         eventsDates = calendar.events.map((event) => {
             return parseInt(event.event_date.split(' ')[0].split('-').slice(-1)[0])
         })
     }
+    
+    const moveToCalendarPage = (event) => {
+        event.preventDefault();
+        history.push(`/calendarpage/${calendar.calendar.id}`)
+    }
 
     return (
         <div className="card">
-            <div className="card-panel teal DaysBlockGrid">
+            <div className="card-panel teal DaysBlockGrid" onClick={moveToCalendarPage}>
                 {
                     
                     month.map((day, index) => {

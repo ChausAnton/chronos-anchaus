@@ -86,7 +86,6 @@ export const HomePage = () => {
         )
         
     }
-    console.log(calendars.length )
 
     return (
         <>
