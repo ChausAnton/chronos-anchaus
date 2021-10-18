@@ -34,7 +34,8 @@ export const CalendarPage = () => {
         const tempMonth = [];
         let count = -(date.getDate() -  1);
 
-        tempMonth.push(date.toLocaleString('default', { month: 'long' }))
+        tempMonth.push()
+        tempMonth.push(date.getFullYear() + '. ' + date.toLocaleString('default', { month: 'long' }))
 
         const baseDate = new Date(Date.UTC(2017, 0, 2)); // just a Monday
         for(let i = 0; i < 7; i++)
