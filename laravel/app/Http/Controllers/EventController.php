@@ -30,7 +30,7 @@ class EventController extends Controller
         $calendar = DB::select("select * from calendars where id = $id;");
 
         if(!$calendar) 
-            return response("not found", 404);
+            return response(["message" => "not found"], 404);
 
         $validated = $request->validate([
             'event_content' => 'required|string',
@@ -52,7 +52,7 @@ class EventController extends Controller
             ];
             return Events::create($data);
         }
-        return response("Forbidden", 403);
+        return response(["message" => "Forbidden"], 403);
 
     }
 

@@ -4,6 +4,7 @@ import {AuthContext} from '../context/AuthContext'
 import { Loader } from '../components/Loader';
 import { useParams } from "react-router-dom";
 import { FiArrowRight, FiArrowLeft} from "react-icons/fi";
+import { CreateEvent } from '../components/CreateEvent';
 
 export const CalendarPage = () => {
     const [calendar, setCalendar] = useState();
@@ -13,6 +14,10 @@ export const CalendarPage = () => {
     const [eventsDates, setEventsDates] = useState();
     const [countMonth, setCountMonth] = useState(new Date().getMonth());
     const {id} = useParams();
+
+    const [creteEvetn, setCreteEvetn] = useState(false);
+    const [eventStart, setEventStart] = useState(false);
+
 
     const NextMonth = (event) => {
         event.preventDefault();
@@ -74,7 +79,6 @@ export const CalendarPage = () => {
             if(fetched.events.length !== 0) {
                 eventsDatesTemp = fetched.events.map((event) => {
                     return event.event_date.split(' ')[0]
-                    //return parseInt(event.event_date.split(' ')[0].split('-').slice(-1)[0])
                 })
             }
             setEventsDates(eventsDatesTemp)
@@ -82,6 +86,19 @@ export const CalendarPage = () => {
         }
         catch (e) {}
     }, [token, request, id]);
+
+    const createEventOnTrue = (event) => {
+        event.preventDefault()
+        if(event.target.id.indexOf('-') !== -1) {
+            setEventStart(event.target.id)
+            setCreteEvetn(true)
+        }
+    }
+
+    const createEventOnFalse = (event) => {
+        event.preventDefault()
+        setCreteEvetn(false)
+    }
 
     useEffect( () => {
         fetchcalendar();
@@ -97,6 +114,7 @@ export const CalendarPage = () => {
     }
 
     return (
+    <>{ creteEvetn === true ? < CreateEvent createEventOnFalse={createEventOnFalse} eventStart={eventStart}/> :
         <div className="CalendarPageGrid">
 
             <div className="PrevMonth" onClick={PrevMonth}>
@@ -111,20 +129,16 @@ export const CalendarPage = () => {
                     month.map((day, index) => {
                         const className = eventsDates.indexOf(day) !== -1 ? "DayBlock DayBlockWithEvent" : "DayBlock"
                         return (
-                            <div key={index} className={ index === 0 ? "MonthBlock" : className}>
-                                <div>
-                                    <p>
-                                        {day !== 0  ? day.indexOf('-') !== -1 ? parseInt(day.split('-').slice(-1)[0]) : day : ''}
-                                    </p>
-                                </div>
+                            <div key={index} className={ index === 0 ? "MonthBlock" : className} onClick={createEventOnTrue} id={day} >
+                                <p id={day}>
+                                    {day !== 0  ? day.indexOf('-') !== -1 ? parseInt(day.split('-').slice(-1)[0]) : day : ''}
+                                </p>
                             </div>
                         )
-                   })
+                    })
                     
                 }
-                
             </div>
-
             <div className="NextMonth" onClick={NextMonth}>
                 <li className="waves-effect">
                     <FiArrowRight className="MonthNextOrPrevArrow"/>
@@ -132,5 +146,6 @@ export const CalendarPage = () => {
             </div>
 
         </div>
+    }</>
     );
 }
