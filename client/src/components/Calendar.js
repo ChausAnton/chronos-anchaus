@@ -8,7 +8,7 @@ export const Calendar = ({calendar, month}) => {
     let eventsDates = [];
     if(calendar.events.length !== 0) {
         eventsDates = calendar.events.map((event) => {
-            return parseInt(event.event_date.split(' ')[0].split('-').slice(-1)[0])
+            return event.event_date.split(' ')[0]
         })
     }
     
@@ -28,7 +28,7 @@ export const Calendar = ({calendar, month}) => {
                             <div key={index} className={ index === 0 ? "MonthBlock" : className}>
                                 <div>
                                     <p>
-                                        {day !== 0  ? day : ''}
+                                        {day !== 0  ? day.indexOf('-') !== -1 ? parseInt(day.split('-').slice(-1)[0]) : day : ''}
                                     </p>
                                 </div>
                             </div>

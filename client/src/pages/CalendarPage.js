@@ -54,7 +54,7 @@ export const CalendarPage = () => {
         while(date.getMonth() === curMonth) {
             nextDays.setDate(date.getDate() + count);
 
-            tempMonth.push(nextDays.getDate())
+            tempMonth.push(nextDays.getFullYear() + '-' + ("0" + (nextDays.getMonth() + 1)).slice(-2) + '-' + ("0" + nextDays.getDate()).slice(-2))
             count++;
             nextDays.setDate(date.getDate() + count);
             curMonth = nextDays.getMonth()
@@ -69,13 +69,16 @@ export const CalendarPage = () => {
                 'Authorization': token
             })
             setCalendar(fetched)
+
             let eventsDatesTemp = [];
             if(fetched.events.length !== 0) {
                 eventsDatesTemp = fetched.events.map((event) => {
-                    return parseInt(event.event_date.split(' ')[0].split('-').slice(-1)[0])
+                    return event.event_date.split(' ')[0]
+                    //return parseInt(event.event_date.split(' ')[0].split('-').slice(-1)[0])
                 })
             }
             setEventsDates(eventsDatesTemp)
+
         }
         catch (e) {}
     }, [token, request, id]);
@@ -111,7 +114,7 @@ export const CalendarPage = () => {
                             <div key={index} className={ index === 0 ? "MonthBlock" : className}>
                                 <div>
                                     <p>
-                                        {day !== 0  ? day : ''}
+                                        {day !== 0  ? day.indexOf('-') !== -1 ? parseInt(day.split('-').slice(-1)[0]) : day : ''}
                                     </p>
                                 </div>
                             </div>

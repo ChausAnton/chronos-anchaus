@@ -32,7 +32,7 @@ export const HomePage = () => {
         const tempMonth = [];
         let count = -(date.getDate() -  1);
 
-        tempMonth.push(date.toLocaleString('default', { month: 'long' }))
+        tempMonth.push(date.getFullYear() + '. ' + date.toLocaleString('default', { month: 'long' }))
 
         const baseDate = new Date(Date.UTC(2017, 0, 2)); // just a Monday
         for(let i = 0; i < 7; i++)
@@ -51,7 +51,7 @@ export const HomePage = () => {
         while(date.getMonth() === curMonth) {
             nextDays.setDate(date.getDate() + count);
 
-            tempMonth.push(nextDays.getDate())
+            tempMonth.push(nextDays.getFullYear() + '-' + ("0" + (nextDays.getMonth() + 1)).slice(-2) + '-' + ("0" + nextDays.getDate()).slice(-2))
             count++;
             nextDays.setDate(date.getDate() + count);
             curMonth = nextDays.getMonth()
