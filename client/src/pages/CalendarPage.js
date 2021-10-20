@@ -17,6 +17,7 @@ export const CalendarPage = () => {
     const [countMonth, setCountMonth] = useState(new Date().getMonth());
     const {id} = useParams();
 
+
     const [creteEvetn, setCreteEvetn] = useState(false);
     const [eventStart, setEventStart] = useState(false);
 
@@ -91,7 +92,6 @@ export const CalendarPage = () => {
     const setEventStartOrShowEventInfo = (event) => {
         event.preventDefault()
         setEventStart(event.target.id)
-            //setCreteEvetn(true)
 
         const EventsOnDay = []
         for(let index in calendar.events) {
@@ -116,6 +116,15 @@ export const CalendarPage = () => {
     const createEventOnFalse = (event) => {
         event.preventDefault()
         setCreteEvetn(false)
+    }
+
+    const DeleteEvent = async(event) => {
+        event.preventDefault()
+        try {
+            await request(`/api/DeleteEventFromCalendar/${id}/${event.target.id}`, 'DELETE', null, {'Authorization': token})
+            fetchcalendar()
+        }
+        catch (e) {}
     }
 
     useEffect( () => {
@@ -148,7 +157,7 @@ export const CalendarPage = () => {
                             const className = eventsDates.indexOf(day) !== -1 ? "DayBlock DayBlockWithEvent activator" : "DayBlock"
                             return (
                                 <div key={index} className={ index === 0 ? "MonthBlock" : className} onClick={setEventStartOrShowEventInfo} id={day} >
-                                    <p id={day} className="activator">
+                                    <p id={day} className="activator white-text">
                                         {day !== 0  ? day.indexOf('-') !== -1 ? parseInt(day.split('-').slice(-1)[0]) : day : ''}
                                     </p>
                                 </div>
@@ -162,14 +171,17 @@ export const CalendarPage = () => {
                             EventData.map((event, index) => {
                                 return (
                                     <div className="card blue darken-1" key={index}>
-                                        <div className="card-content white-text">
-                                            <span className="card-title center">{event.event_title}</span>
-                                            <div className="EventCategory">
+                                        <div className="card-content white-text" id={event.id}>
+                                            <span className="card-title center" id={event.id}>{event.event_title}</span>
+                                            <div className="DleteEvent" id={event.id}>
+                                                <AiOutlineClose onClick={DeleteEvent} id={event.id}/>
+                                            </div>
+                                            <div className="EventCategory" id={event.id}>
                                                 <div className="chip">
                                                     <span>{event.event_category}</span>
                                                 </div>
                                             </div>
-                                            <div className="EventContent">
+                                            <div className="EventContent" id={event.id}>
                                                 <span>{event.event_content}</span>
                                             </div>
                                             <div className="EventDataAndDuration center">
