@@ -32,7 +32,6 @@ input.yellow-input:focus {
     margin: 0px;
     display: flex;
     flex-flow: row wrap;
-    border: 2px solid black;
 }
 
 .DaysBlockGrid {

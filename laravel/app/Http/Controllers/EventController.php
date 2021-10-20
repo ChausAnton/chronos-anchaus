@@ -37,7 +37,7 @@ class EventController extends Controller
             'event_title' => 'required|string',
             'event_date' => 'required|date|date_format:Y-m-d',
             'event_category' => 'required|in:arrangement,reminder,task',
-            'event_duration' => 'required|date|date_format:Y-m-d'
+            'event_duration' => 'required|date|date_format:Y-m-d|after_or_equal:event_date'
         ]);
 
         if(auth()->user() && auth()->user()->id == $calendar[0]->calendar_author_id) {
