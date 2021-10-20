@@ -43,6 +43,7 @@ input.yellow-input:focus {
     grid-column-end: 7;
     align-items: center;
     justify-items: center;
+    padding: 20px;
 }
 
 .MonthBlock {
@@ -50,14 +51,25 @@ input.yellow-input:focus {
     grid-column-end: 8;
 }
 
+.FontSizeForActivator {
+    font-size: smaller;
+}
+
+
 .DayBlockWithEvent {
     border-bottom: 2px solid black;
 }
 
-.FiPlusSizeEditProfile, .FiArrowLeftSizeEditProfile {
+.FiPlusSizeEditProfile, .FiArrowLeftSizeEditProfile, .MenuIconCalendarPage, .FiArrowRightDateToDuration  {
     position: relative;
     font-size: x-large;
     top: 5px;
+}
+
+.EventCategory {
+    position: absolute;
+    left: 10px;
+    top: 10px; 
 }
 
 .FiSendSizeEditProfile {

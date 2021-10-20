@@ -32,7 +32,6 @@ export const CreateEvent = ({createEventOnFalse, eventStart}) => {
         else {
             form.event_category = event.value
         }
-        console.log({...form})
     };
 
     const CreateEventHandler = async(event) => {
